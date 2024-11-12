@@ -21,7 +21,9 @@
             <NuxtLink to="/" class="nav-link">最新消息</NuxtLink>
           </li>
           <li class="nav-item">
-            <NuxtLink to="/room" class="nav-link">房型介紹</NuxtLink>
+            <NuxtLink to="/room" class="nav-link" target="_blank"
+              >房型</NuxtLink
+            >
           </li>
         </ul>
       </div>
