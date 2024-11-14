@@ -12,14 +12,13 @@ const getRoomsList = async () => {
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
-      alert(response.status);
-      return;
+      throw new Error('取得房型資料失敗');
     }
 
     const { result } = await response.json();
     roomsList.value = result;
   } catch (error) {
-    alert(error.message);
+    console.error('發生錯誤:', error);
   }
 };
 
@@ -36,7 +35,10 @@ onMounted(() => {
         v-for="room in roomsList"
         :key="room._id"
       >
-        <div class="card h-100 shadow-sm" @click="router.push('/room/_id')">
+        <div
+          class="card h-100 shadow-sm"
+          @click="router.push(`/room/${room._id}`)"
+        >
           <img :src="room.imageUrl" class="card-img-top" alt="Room Image" />
           <div class="card-body d-flex flex-column">
             <h3 class="card-title">{{ room.name }}</h3>
