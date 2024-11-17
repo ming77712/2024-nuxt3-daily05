@@ -1,30 +1,40 @@
 <script setup>
-const roomsList = ref([]);
-// 使用 fetch 或 axios 串接 前台房型 API ( GET )
-// apiUrl : https://nuxr3.zeabur.app/api/v1/rooms
-// response 回傳後，將資料寫入 roomsList 變數
-// 使用 roomsList 變數在下方 template 渲染列表
+const route = useRoute();
 const router = useRouter();
-const apiUrl = 'https://nuxr3.zeabur.app/api/v1/rooms';
+// const apiUrl = 'https://nuxr3.zeabur.app/api/v1/rooms';
+// const roomsList = ref([]);
 
-const getRoomsList = async () => {
-  try {
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-      throw new Error('取得房型資料失敗');
-    }
-
-    const { result } = await response.json();
-    roomsList.value = result;
-  } catch (error) {
-    console.error('發生錯誤:', error);
-  }
-};
-
-onMounted(() => {
-  getRoomsList();
+const { data: roomsList } = await useFetch('/rooms', {
+  baseURL: 'https://nuxr3.zeabur.app/api/v1',
+  transform: (response) => {
+    const { result } = response;
+    return result;
+  },
+  onResponseError({ response }) {
+    const { message } = response._data;
+    console.error('Error:', message);
+    router.push('/');
+  },
 });
+
+// const getRoomsList = async () => {
+//   try {
+//     const response = await fetch(apiUrl);
+
+//     if (!response.ok) {
+//       throw new Error('取得房型資料失敗');
+//     }
+
+//     const { result } = await response.json();
+//     roomsList.value = result;
+//   } catch (error) {
+//     console.error('發生錯誤:', error);
+//   }
+// };
+
+// onMounted(() => {
+//   getRoomsList();
+// });
 </script>
 
 <template>

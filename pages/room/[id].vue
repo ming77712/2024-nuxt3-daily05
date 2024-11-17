@@ -1,32 +1,47 @@
 <script setup>
+const route = useRoute();
 const router = useRouter();
 
-const route = useRoute();
-const apiURL = `https://nuxr3.zeabur.app/api/v1/rooms/${route.params.id}`;
-const roomDetail = ref({});
+// const apiURL = `https://nuxr3.zeabur.app/api/v1/rooms/${route.params.id}`;
+// const roomDetail = ref({});
 
-const getRoomDetail = async () => {
-  try {
-    const response = await fetch(apiURL);
+const { id } = route.params;
 
-    if (!response.ok) {
-      throw new Error('取得房型詳細資料失敗');
-    }
-
-    const { result } = await response.json();
-    roomDetail.value = result;
-  } catch (error) {
-    console.error('發生錯誤:', error);
-  }
-};
-
-onMounted(() => {
-  getRoomDetail();
+const { data: roomDetail } = await useFetch(`/rooms/${id}`, {
+  baseURL: 'https://nuxr3.zeabur.app/api/v1',
+  transform: (response) => {
+    const { result } = response;
+    return result;
+  },
+  onResponseError({ response }) {
+    const { message } = response._data;
+    console.error('Error:', message);
+    router.push('/');
+  },
 });
 
-// 串接 API 取得房型詳細資料
-// API path : https://nuxr3.zeabur.app/api/v1/rooms/{id}
-// 將資料渲染至下方的 div.room-page 區塊
+const isProvide = function (isProvideBoolean = false) {
+  return isProvideBoolean ? '提供' : '未提供';
+};
+
+// const getRoomDetail = async () => {
+//   try {
+//     const response = await fetch(apiURL);
+
+//     if (!response.ok) {
+//       throw new Error('取得房型詳細資料失敗');
+//     }
+
+//     const { result } = await response.json();
+//     roomDetail.value = result;
+//   } catch (error) {
+//     console.error('發生錯誤:', error);
+//   }
+// };
+
+// onMounted(() => {
+//   getRoomDetail();
+// });
 </script>
 
 <template>
