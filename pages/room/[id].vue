@@ -24,6 +24,33 @@ const isProvide = function (isProvideBoolean = false) {
   return isProvideBoolean ? '提供' : '未提供';
 };
 
+// 使用 useSeoMeta  將 roomObject 的資訊寫入 SEO Meta
+/* 請撰寫 useSeoMeta({ }) 渲染出下方的 HTML 結構，並將 {{ }}  改成使用 roomObject 物件的資料。
+<title> Freyja | {{ 房型名稱 }}</title>
+<meta name="description" content="{{ 房型描述 }}">
+<meta property="og:title" content="Freyja | {{ 房型名稱 }} ">
+<meta property="og:description" content="{{ 房型描述 }}">
+<meta property="og:image" content="{{房型主圖}}">
+<meta property="og:url" content="https://freyja.travel.com.tw/room/{房型 id }">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freyja | {{ 房型名稱 }}">
+<meta name="twitter:description" content="{{ 房型描述 }}">
+<meta name="twitter:image" content="{{房型主圖}}">
+*/
+useSeoMeta({
+  title: roomDetail.value.name,
+  titleTemplate: (title) => `Freyja | ${title}`,
+  description: () => roomDetail.value.description,
+  ogTitle: () => `Freyja | ${roomDetail.value.name}`,
+  ogDescription: () => roomDetail.value.description,
+  ogImage: () => roomDetail.value.imageUrl,
+  ogUrl: () => `https://freyja.travel.com.tw/room/${roomDetail.value.id}`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => `Freyja | ${roomDetail.value.name}`,
+  twitterDescription: () => roomDetail.value.description,
+  twitterImage: () => roomDetail.value.imageUrl,
+});
+
 // const getRoomDetail = async () => {
 //   try {
 //     const response = await fetch(apiURL);
