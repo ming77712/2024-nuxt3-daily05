@@ -2,7 +2,6 @@
 const route = useRoute();
 const router = useRouter();
 
-// const apiURL = `https://nuxr3.zeabur.app/api/v1/rooms/${route.params.id}`;
 // const roomDetail = ref({});
 
 const { id } = route.params;
@@ -24,33 +23,6 @@ const isProvide = function (isProvideBoolean = false) {
   return isProvideBoolean ? '提供' : '未提供';
 };
 
-// 使用 useSeoMeta  將 roomObject 的資訊寫入 SEO Meta
-/* 請撰寫 useSeoMeta({ }) 渲染出下方的 HTML 結構，並將 {{ }}  改成使用 roomObject 物件的資料。
-<title> Freyja | {{ 房型名稱 }}</title>
-<meta name="description" content="{{ 房型描述 }}">
-<meta property="og:title" content="Freyja | {{ 房型名稱 }} ">
-<meta property="og:description" content="{{ 房型描述 }}">
-<meta property="og:image" content="{{房型主圖}}">
-<meta property="og:url" content="https://freyja.travel.com.tw/room/{房型 id }">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Freyja | {{ 房型名稱 }}">
-<meta name="twitter:description" content="{{ 房型描述 }}">
-<meta name="twitter:image" content="{{房型主圖}}">
-*/
-useSeoMeta({
-  title: roomDetail.value.name,
-  titleTemplate: (title) => `Freyja | ${title}`,
-  description: () => roomDetail.value.description,
-  ogTitle: () => `Freyja | ${roomDetail.value.name}`,
-  ogDescription: () => roomDetail.value.description,
-  ogImage: () => roomDetail.value.imageUrl,
-  ogUrl: () => `https://freyja.travel.com.tw/room/${roomDetail.value.id}`,
-  twitterCard: 'summary_large_image',
-  twitterTitle: () => `Freyja | ${roomDetail.value.name}`,
-  twitterDescription: () => roomDetail.value.description,
-  twitterImage: () => roomDetail.value.imageUrl,
-});
-
 // const getRoomDetail = async () => {
 //   try {
 //     const response = await fetch(apiURL);
@@ -66,12 +38,58 @@ useSeoMeta({
 //   }
 // };
 
+// useSeoMeta({
+//   title: roomDetail.value.name,
+//   titleTemplate: (title) => `Freyja | ${title}`,
+//   description: () => roomDetail.value.description,
+//   ogTitle: () => `Freyja | ${roomDetail.value.name}`,
+//   ogDescription: () => roomDetail.value.description,
+//   ogImage: () => roomDetail.value.imageUrl,
+//   ogUrl: () => `https://freyja.travel.com.tw/room/${roomDetail.value.id}`,
+//   twitterCard: 'summary_large_image',
+//   twitterTitle: () => `Freyja | ${roomDetail.value.name}`,
+//   twitterDescription: () => roomDetail.value.description,
+//   twitterImage: () => roomDetail.value.imageUrl,
+// });
+
+const title = ref(`Freyja | ${roomDetail.value.name}`);
+const description = ref(roomDetail.value.description);
+const socialMediaTitle = computed(() => `Freyja | ${roomDetail.value.name}`);
+const socialMediaDescription = computed(() => roomDetail.value.description);
+const socialMediaImage = computed(() => roomDetail.value.imageUrl);
+const fbMediaUrl = ref(
+  `https://freyja.travel.com.tw/room/${roomDetail.value.id}`
+);
+const twitterMediaCard = ref('summary_large_image');
+
 // onMounted(() => {
 //   getRoomDetail();
 // });
 </script>
 
 <template>
+  <Head>
+    <Title>{{ title }}</Title>
+    <Meta name="description" :content="description" />
+    <Meta property="og:title" :content="socialMediaTitle" />
+    <Meta property="og:description" :content="socialMediaDescription" />
+    <Meta property="og:image" :content="socialMediaImage" />
+    <Meta property="og:url" :content="fbMediaUrl" />
+    <Meta name="twitter:card" :content="twitterMediaCard" />
+    <Meta name="twitter:title" :content="socialMediaTitle" />
+    <Meta name="twitter:description" :content="socialMediaDescription" />
+    <Meta name="twitter:image" :content="socialMediaImage" />
+    <!-- <NoScript
+      >此網頁需要支援 JavaScript 才能正確運行，請先至你的瀏覽器設定中開啟
+      JavaScript。</NoScript
+    >
+    <Style type="text/css"> body { background-color: #f0f0f0; } </Style>
+    <Link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    /> -->
+  </Head>
+
   <h2>房型詳細頁面</h2>
 
   <div class="container">
