@@ -1,7 +1,7 @@
 <script setup>
 const { $swal } = useNuxtApp();
 
-// 表單格式
+const router = useRouter();
 const userRegisteObject = ref({
   name: '',
   email: '',
@@ -14,13 +14,13 @@ const userRegisteObject = ref({
   },
 });
 
-const sendUserRegister = async () => {
+const processRegistration = async (requestBody) => {
   console.log(userRegisteObject.value);
   try {
-    await $fetch('/v1/user/signup', {
+    const response = await $fetch('/v1/user/signup', {
       method: 'POST',
       baseURL: 'https://nuxr3.zeabur.app/api',
-      body: { ...userRegisteObject.value },
+      body: { ...requestBody },
     });
 
     await $swal.fire({
@@ -30,6 +30,7 @@ const sendUserRegister = async () => {
       showConfirmButton: false,
       timer: 1500,
     });
+    router.push('/login');
   } catch (error) {
     const { message } = error.response._data;
     await $swal.fire({
@@ -39,8 +40,6 @@ const sendUserRegister = async () => {
       showConfirmButton: false,
       timer: 1500,
     });
-  } finally {
-    userRegisteObject.value = { address: {} };
   }
 };
 </script>
@@ -52,7 +51,7 @@ const sendUserRegister = async () => {
         <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
           <div class="bg-white p-4 p-md-5 rounded shadow-sm">
             <h2 class="h3 mb-4">會員註冊</h2>
-            <form @submit.prevent="sendUserRegister">
+            <form @submit.prevent="processRegistration(userRegisteObject)">
               <div class="form-floating mb-4">
                 <input
                   type="text"
