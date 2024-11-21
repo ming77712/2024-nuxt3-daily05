@@ -1,5 +1,6 @@
 <script setup>
 const { $swal } = useNuxtApp();
+const router = useRouter();
 
 const userLoginObject = ref({
   email: '',
@@ -27,7 +28,7 @@ const loginAccount = async (requestBody) => {
       showConfirmButton: false,
       timer: 1500,
     });
-    // router.push('/');
+    router.push('/');
   } catch (error) {
     const { message } = error.response._data;
     await $swal.fire({
@@ -53,6 +54,7 @@ const loginAccount = async (requestBody) => {
                 type="email"
                 class="form-control"
                 id="email"
+                v-model="userLoginObject.email"
                 placeholder="example@gmail.com"
                 pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 required
@@ -65,6 +67,7 @@ const loginAccount = async (requestBody) => {
                 type="password"
                 class="form-control"
                 id="password"
+                v-model="userLoginObject.password"
                 placeholder="請輸入 8 碼以上密碼"
                 pattern=".{8,}"
                 required
