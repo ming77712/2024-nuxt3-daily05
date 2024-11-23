@@ -28,7 +28,7 @@ const loginAccount = async (requestBody) => {
       showConfirmButton: false,
       timer: 1500,
     });
-    router.push('/');
+    router.push('/orders');
   } catch (error) {
     const { message } = error.response._data;
     await $swal.fire({
