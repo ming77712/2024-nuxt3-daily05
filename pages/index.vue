@@ -23,6 +23,9 @@ const closeOffcanvas = () => {
   offcanvas.hide();
 };
 
+const message = ref('A1B2c3deFGhijk');
+const time = ref(1730427600000);
+
 onMounted(() => {
   getData();
   modal = $bootstrapModal(modalRef.value, {
@@ -51,6 +54,19 @@ onMounted(() => {
     <button type="button" class="btn btn-secondary" @click="showOffcanvas">
       開啟 Offcanvas
     </button>
+
+    <h2>自訂英文文字大小寫轉換指令</h2>
+    <!-- 大寫轉小寫格式之後，將結果寫入元素 -->
+    <p v-textformat:lowercase="message"></p>
+
+    <!-- 小寫轉大寫格式之後，將結果寫入元素 -->
+    <p v-textformat:uppercase="message"></p>
+
+    <h2>自訂時間轉換指令</h2>
+    <!-- 使用 plugins/timeformat.js 建立的指令，將變數 time 的時間戳帶入 -->
+    <!-- 轉換成 yyyy-mm-dd hh:mm:ss 格式之後將結果寫入元素 -->
+    <!-- 1730427600000 => 轉換成 yyyy-mm-dd hh:mm:ss  -->
+    <p v-timeformat="time"></p>
 
     <!-- modal 元件 -->
     <div
