@@ -1,9 +1,6 @@
 <script setup>
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/css/index.css';
-
-const { isLoading, newsList, getData } = useHome();
-const { $bootstrapModal, $bootstrapOffcanvas } = useNuxtApp();
+const { newsList, getData } = useHome();
+const { $bootstrapModal, $bootstrapOffcanvas, $useLoading } = useNuxtApp();
 
 const modalRef = ref(null);
 let modal;
@@ -26,6 +23,19 @@ const closeOffcanvas = () => {
 const message = ref('A1B2c3deFGhijk');
 const time = ref(1730427600000);
 
+const loadingHandler = $useLoading({
+  backgroundColor: 'green',
+  loader: 'dots',
+  'is-full-page': false,
+});
+
+function openLoading() {
+  const loader = loadingHandler.show();
+  setTimeout(() => {
+    loader.hide();
+  }, 1000);
+}
+
 onMounted(() => {
   getData();
   modal = $bootstrapModal(modalRef.value, {
@@ -44,7 +54,7 @@ onMounted(() => {
     <NewsCard v-for="news in newsList" :key="news._id" v-bind="news" />
 
     <ClientOnly>
-      <Loading v-model:active="isLoading" />
+      <button type="button" @click="openLoading">開啟 Loading 效果</button>
     </ClientOnly>
 
     <button type="button" class="btn btn-primary" @click="showModal">
