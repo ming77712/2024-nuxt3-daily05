@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@nuxt/scripts": "^0.9.5",
+    "@pinia/nuxt": "^0.7.0",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.4",
     "bootstrap": "^5.3.3",
     "nuxt": "^3.12.4",
+    "pinia": "^2.2.7",
     "sweetalert2": "^11.14.5",
     "vue": "latest",
     "vue-loading-overlay": "6.0"

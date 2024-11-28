@@ -26,6 +26,11 @@
             >
           </li>
           <li class="nav-item">
+            <NuxtLink to="/booking" class="nav-link" target="_blank"
+              >訂房</NuxtLink
+            >
+          </li>
+          <li class="nav-item">
             <NuxtLink to="/register" class="nav-link" target="_blank"
               >註冊</NuxtLink
             >
