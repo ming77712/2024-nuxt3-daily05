@@ -91,7 +91,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@vee-validate/nuxt'],
   // pinia: {
   //   storesDirs: ['./stores/**'], // 自動匯入 /stores 目錄下的所有 store
   // },
